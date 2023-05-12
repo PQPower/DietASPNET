@@ -1,0 +1,48 @@
+﻿@model AddProductViewModel
+@{
+    ViewData["Title"] = "Add Product";
+}
+
+<h1>Add Product</h1>
+
+<form asp-action="AddProduct">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="NewProductName" class="control-label">Product Name</label>
+        <input asp-for="NewProductName" class="form-control" />
+        <span asp-validation-for="NewProductName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Fat" class="control-label">Fat</label>
+        <input asp-for="Fat" class="form-control" />
+        <span asp-validation-for="Fat" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Carbs" class="control-label">Carbs</label>
+        <input asp-for="Carbs" class="form-control" />
+        <span asp-validation-for="Carbs" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Protein" class="control-label">Protein</label>
+        <input asp-for="Protein" class="form-control" />
+        <span asp-validation-for="Protein" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Calories" class="control-label">Calories</label>
+        <input asp-for="Calories" class="form-control" />
+        <span asp-validation-for="Calories" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-2">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

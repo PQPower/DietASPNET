@@ -1,0 +1,74 @@
+﻿@model ProductsViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="col-4 p-0 justify-content-end">
+    <form asp-controller="Product" asp-action="Index">
+        <span class="btn-group">
+            <input class="form-control" type="text" name="SearchText"
+                placeholder="SearchKey">
+                <input class="p-1 m1-2 btn btn-sm btn-info" type="submit" value="Search"/>
+        </span>
+    </form>
+</div>
+<table class="table table-bordered table-hover mt-5">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                ProductName
+            </th>
+            <th>
+                Carbs
+            </th>
+            <th>
+                Fat
+            </th>
+            <th>
+                Protein
+            </th>
+            <th>
+                Calories
+            </th>
+                                @if (User.IsInRole("admin"))
+                    {
+            <th>
+                Options
+            </th>
+                    }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => product.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => product.Carbs)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => product.Fat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => product.Protein)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => product.Calories)
+                </td>
+                    @if (User.IsInRole("admin"))
+                    {
+                <td>
+                        <a asp-action="EditProduct" asp-route-id="@product.Id">Edit</a>
+                        <a asp-action="DeleteProduct" asp-route-id="@product.Id">Delete</a>
+                </td>
+                    }
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (User.IsInRole("admin"))
+{
+    <a class="btn btn-primary mt-2" asp-action="AddProduct">Create New</a>
+}
