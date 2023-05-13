@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using System.Diagnostics;
 using System.Linq;
 using System.Collections;
+using DietTracker.Views.Shared.Components.SearchBar;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
+
 namespace DietTracker.Controllers
 {
     public class ProductController : Controller
@@ -20,8 +23,10 @@ namespace DietTracker.Controllers
 
         [Authorize(Roles = "admin, user")]
         //[HttpGet]
-        public IActionResult Index(string SearchText = "")
+        public IActionResult Index(string SearchText = "", int pg = 1)
         {
+            //SPager SearchPager = new SPager() { Action = "Index", Controller = "Product", SearchText = SearchText };
+            //ViewBag.SearchPager = SearchPager;
             if (SearchText != "" && SearchText != null)
             {
                 var viewModel = new ProductsViewModel
@@ -29,7 +34,18 @@ namespace DietTracker.Controllers
                     Products = _productService.GetAll()
                      .Where(a => a.ProductName.Contains(SearchText)).ToList()
                 };
+                //return View(viewModel);
+                const int pageSize = 10;
+                if (pg < 1)
+                    pg = 1;
+                int recsCount = viewModel.Products.Count();
+
+                int recSkip = (pg - 1) * pageSize;
+                viewModel.Products = viewModel.Products.Skip(recSkip).Take(pageSize).ToList();
+                SPager SearchPager = new SPager(recsCount, pg, pageSize) { Action = "Index", Controller = "Product", SearchText = SearchText };
+                ViewBag.SearchPager = SearchPager;
                 return View(viewModel);
+                
             }
             else
             {
@@ -38,7 +54,17 @@ namespace DietTracker.Controllers
             {
                 Products = _productService.GetAll().ToList()
             };
-            return View(viewModel);
+                const int pageSize = 10;
+                if (pg < 1)
+                    pg = 1;
+                int recsCount = viewModel.Products.Count();
+
+                int recSkip = (pg - 1) * pageSize;
+                viewModel.Products = viewModel.Products.Skip(recSkip).Take(pageSize).ToList();
+                SPager SearchPager = new SPager(recsCount, pg, pageSize) { Action = "Index", Controller = "Product", SearchText = SearchText };
+                ViewBag.SearchPager = SearchPager;
+                return View(viewModel);
+                //return View(viewModel);
             }
         }
         [Authorize(Roles = "admin")]
