@@ -18,7 +18,7 @@ namespace BusinessLogic.Implementations
             var result = await _db.Add(user);
             await _db.SaveChangesAsync();
 
-            return result;
+            return user.Id;
         }
         public async Task<User> GetByLoginAsync(string login)
         {
@@ -30,7 +30,7 @@ namespace BusinessLogic.Implementations
         }
         public async Task<User> GetUserByNameAsync(string userName)
         {
-            return await _db.GetAll<User>().Include(u => u.Role).FirstOrDefaultAsync(u => u.Login == userName);
+            return await _db.GetAll<User>().Include(u => u.UserWeightHistorys).FirstOrDefaultAsync(u => u.Login == userName);
         }
     }
 }

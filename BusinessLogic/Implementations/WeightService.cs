@@ -19,6 +19,7 @@ namespace BusinessLogic.Implementations
         public async Task AddUserWeightHistoryAsync(UserWeightHistory userWeightHistory)
         {
             await _db.Add(userWeightHistory);
+            await _db.SaveChangesAsync();
         }
 
         public async Task<int> CalculateCaloriesPerDayAsync(string userName)
