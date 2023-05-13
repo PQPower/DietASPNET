@@ -28,6 +28,9 @@ namespace BusinessLogic.Implementations
         {
             return _db.GetAll<User>().Include(u => u.Role);
         }
-
+        public async Task<User> GetUserByNameAsync(string userName)
+        {
+            return await _db.GetAll<User>().Include(u => u.Role).FirstOrDefaultAsync(u => u.Login == userName);
+        }
     }
 }

@@ -6,6 +6,7 @@ namespace BusinessLogic.Contracts
     {
         public Task<int> CreateAsync(User user);
         public Task<User> GetByLoginAsync(string login);
+        public Task<User> GetUserByNameAsync(string userName);
         public IQueryable<User> GetAll();
     }
 }

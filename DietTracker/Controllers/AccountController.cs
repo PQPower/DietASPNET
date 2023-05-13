@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.Contracts;
+using BusinessLogic.Implementations;
 using DataAccessLayer.Entities;
 using DietTracker.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -13,11 +14,13 @@ namespace DietTracker.Controllers
     {
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
+        private readonly IWeightService _weightService;
 
-        public AccountController(IUserService userService, IRoleService roleService)
+        public AccountController(IUserService userService, IRoleService roleService, IWeightService weightService)
         {
             _userService = userService;
             _roleService = roleService;
+            this._weightService = weightService;
         }
         [HttpGet]
         public IActionResult Register()
@@ -46,11 +49,19 @@ namespace DietTracker.Controllers
                          Gender = model.Gender,
                          LifeStyle = model.LifeStyle,
                          BirthDate =  model.BirthDate,
+                         Height = model.Height,
                     };
                     Role userRole = await _roleService.GetAll().FirstOrDefaultAsync(r => r.RoleName == "user");
                     if (userRole != null)
                         user.Role = userRole;
-                    await _userService.CreateAsync(user);
+                    var createdUserId = await _userService.CreateAsync(user);
+                    var weightHistory = new UserWeightHistory()
+                    {
+                        UpdatedDate = DateTime.Now,
+                        Weight = model.Weight,
+                        UserId = createdUserId,
+                    };
+                    await _weightService.AddUserWeightHistoryAsync(weightHistory);
                     await Authenticate(user);
 
                     return RedirectToAction("Index", "Home");

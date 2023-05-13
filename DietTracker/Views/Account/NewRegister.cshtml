@@ -47,6 +47,15 @@
                             <input type="date" 
                                    asp-for="BirthDate">
                             </div>
+
+                            <div class="col-md-12">
+                                <input class="form-control" type="number" asp-for="Weight" placeholder="Weight" required>
+                                <span style="color:red" asp-validation-for="Login" />
+                            </div>
+                            <div class="col-md-12">
+                                <input class="form-control" type="number" asp-for="Height" placeholder="Height" required>
+                                <span style="color:red" asp-validation-for="Login" />
+                            </div>
                         <div class="col-md-12 mt-3">
                             <label class="mb-3 mr-1" for="gender">Gender: </label>
 

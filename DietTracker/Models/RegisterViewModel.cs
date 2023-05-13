@@ -18,6 +18,8 @@ namespace DietTracker.Models
         [Required(ErrorMessage = "ConfirmPassword")]
         [Compare("Password", ErrorMessage = "Passwords don't match")]
         public string ConfirmPassword { get; set; }
+        public int Height { get; set; }
+        public int Weight { get; set; }
         public DateTime BirthDate { get; set; }
         public Gender Gender { get; set; }
         public LifeStyle LifeStyle { get; set; }

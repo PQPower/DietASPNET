@@ -3,7 +3,9 @@
     public enum LifeStyle
     {
         Passive,
+        Low,
         Medium,
-        Active,
+        High,
+        VeryHigh,
     }
 }
