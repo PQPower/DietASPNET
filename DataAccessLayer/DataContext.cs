@@ -30,9 +30,9 @@ namespace DataAccessLayer
             // Seed default devices
             var defaultDevices = new Product[]
             {
-                new Product(){ Id = 1, ProductName = "Water"},
-                new Product(){ Id = 2, ProductName = "Tea"},
-                new Product(){ Id = 3, ProductName = "Coffee"},
+                //new Product(){ Id = 1, ProductName = "Water"},
+                //new Product(){ Id = 2, ProductName = "Tea"},
+                //new Product(){ Id = 3, ProductName = "Coffee"},
             };
 
             modelBuilder.Entity<Role>().HasData(new Role[] { adminRole, userRole });
