@@ -14,6 +14,7 @@ namespace DataAccessLayer.Entities
         public DateTime BirthDate { get; set; }
         public Gender Gender { get; set; }
         public LifeStyle LifeStyle { get; set; }
+        public Expectation Expectation { get; set; }
         public int Height{ get; set; }
         public ICollection<UserWeightHistory> UserWeightHistorys { get; set; }
         public User()

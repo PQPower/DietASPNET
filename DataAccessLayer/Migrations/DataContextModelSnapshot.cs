@@ -95,6 +95,9 @@ namespace DataAccessLayer.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Expectation")
+                        .HasColumnType("int");
+
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
@@ -126,6 +129,7 @@ namespace DataAccessLayer.Migrations
                         {
                             Id = 1,
                             BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Expectation = 0,
                             Gender = 0,
                             Height = 0,
                             LifeStyle = 0,

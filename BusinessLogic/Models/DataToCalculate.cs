@@ -1,9 +1,8 @@
-﻿using DataAccessLayer.Entities;
-using DataAccessLayer.Enums;
+﻿using DataAccessLayer.Enums;
 
-namespace DietTracker.Models
+namespace BusinessLogic.Models
 {
-    public class WeightViewModel
+    public class DataToCalculate
     {
         public int Age { get; set; }
         public Gender Gender { get; set; }
@@ -11,6 +10,5 @@ namespace DietTracker.Models
         public int Height { get; set; }
         public double Weight { get; set; }
         public Expectation Expectation { get; set; }
-        public int CaloriesPerDay { get; set; }
     }
 }

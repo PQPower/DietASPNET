@@ -23,11 +23,6 @@ namespace DietTracker.Controllers
             this._weightService = weightService;
         }
         [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
-        [HttpGet]
         public IActionResult NewRegister()
         {
             return View();
@@ -50,6 +45,7 @@ namespace DietTracker.Controllers
                          LifeStyle = model.LifeStyle,
                          BirthDate =  model.BirthDate,
                          Height = model.Height,
+                         Expectation = DataAccessLayer.Enums.Expectation.Medium //TODO add field yo UI registration
                     };
                     Role userRole = await _roleService.GetAll().FirstOrDefaultAsync(r => r.RoleName == "user");
                     if (userRole != null)

@@ -1,4 +1,6 @@
-﻿using DataAccessLayer.Entities;
+﻿using BusinessLogic.Models;
+using DataAccessLayer.Entities;
+using DataAccessLayer.Enums;
 
 namespace BusinessLogic.Contracts
 {
@@ -6,5 +8,7 @@ namespace BusinessLogic.Contracts
     {
         public Task<int> CalculateCaloriesPerDayAsync(string userName);
         public Task AddUserWeightHistoryAsync(UserWeightHistory userWeightHistory);
+        public int CalculateCaloriesPerDay(DataToCalculate data);
+        public int CalculateAgeFromBirthDate(DateTime birthDate);
     }
 }
