@@ -3,6 +3,7 @@ using BusinessLogic.Models;
 using DataAccessLayer;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.Implementations
 {
@@ -80,6 +81,11 @@ namespace BusinessLogic.Implementations
             if (birthDate.Date > DateTime.Today.AddYears(-Age)) // 5 декабря 2000 > 13 марта 2000 
                 Age--; // 23 - 1 = 22
             return Age;
+        }
+
+        public Task<List<UserWeightHistory>> GetUserWeightHistoriesByUserIdAsync(int userId)
+        {
+            return _db.GetAll<UserWeightHistory>().Where(x => x.UserId == userId).ToListAsync();
         }
     }
 }

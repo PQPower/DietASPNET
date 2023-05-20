@@ -16,3 +16,39 @@
         <input type="submit" value="Change Weight" class="btn btn-primary" />
     </div>
 </form>
+<div id="chartContainer"></div>
+
+<script type="text/javascript">
+    var result = @Html.Raw(ViewBag.DataPoints);
+    var dataPoints = [];
+    debugger;
+    for (var i = 0; i < result.length; i++) {
+        dataPoints.push({ label: result[i].UpdatedDate, y: result[i].Weight });
+    }
+
+    window.onload = function () {
+        var chart = new CanvasJS.Chart("chartContainer", {
+            theme: "light2",
+            zoomEnabled: true,
+            animationEnabled: true,
+            title: {
+                text: "Weight history graph"
+            },
+            axisX: {
+                title: "Дата",
+            },
+            axisY: {
+                title: "Вес"
+            },
+            data: [
+                {
+                    type: "line",
+
+                    dataPoints: dataPoints,
+                }
+            ]
+        });
+        chart.render();
+    };
+</script>
+<script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>

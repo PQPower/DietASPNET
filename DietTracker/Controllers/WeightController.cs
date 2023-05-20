@@ -6,6 +6,7 @@ using DataAccessLayer.Entities;
 using DietTracker.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace DietTracker.Controllers
 {
@@ -61,9 +62,15 @@ namespace DietTracker.Controllers
             return View("Index", viewModel);
         }
         [HttpGet]
-        public IActionResult WeightGraph()
+        public async Task<IActionResult> WeightGraph()
         {
-
+            int userId = (await _userService.GetUserByNameAsync(User.Identity.Name)).Id;
+            JsonSerializerSettings _jsonSetting = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore, ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects
+            };
+            var dataFromDb = (await _weightService.GetUserWeightHistoriesByUserIdAsync(userId)).Select(
+                x => new WeightGraphViewModel() { UpdatedDate = x.UpdatedDate.ToString("dd.MM.yy"), Weight = x.Weight });
+            ViewBag.DataPoints = JsonConvert.SerializeObject(dataFromDb, _jsonSetting);
             return View();
         }
         public async Task<IActionResult> AddWeight(double weight)
@@ -77,7 +84,7 @@ namespace DietTracker.Controllers
           
             };
             await _weightService.AddUserWeightHistoryAsync(model);
-            return View("WeightGraph");
+            return RedirectToAction("WeightGraph");
         }
     }
 }
