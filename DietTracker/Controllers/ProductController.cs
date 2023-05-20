@@ -1,24 +1,23 @@
-﻿using BusinessLogic.Contracts;
+﻿using AutoMapper;
+using BusinessLogic.Contracts;
 using DataAccessLayer.Entities;
 using DietTracker.Models;
+using DietTracker.Views.Shared.Components.SearchBar;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using System.Diagnostics;
-using System.Linq;
-using System.Collections;
-using DietTracker.Views.Shared.Components.SearchBar;
-using Microsoft.AspNetCore.Mvc.Diagnostics;
 
 namespace DietTracker.Controllers
 {
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
+        private readonly IMapper _mapper;
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService, IMapper mapper)
         {
             _productService = productService;
+            _mapper = mapper;
         }
 
         [Authorize(Roles = "admin, user")]
@@ -44,15 +43,15 @@ namespace DietTracker.Controllers
                 SPager SearchPager = new SPager(recsCount, pg, pageSize) { Action = "Index", Controller = "Product", SearchText = SearchText };
                 ViewBag.SearchPager = SearchPager;
                 return View(viewModel);
-                
+
             }
             else
             {
 
-            var viewModel = new ProductsViewModel
-            {
-                Products = _productService.GetAll().ToList()
-            };
+                var viewModel = new ProductsViewModel
+                {
+                    Products = _productService.GetAll().ToList()
+                };
                 const int pageSize = 10;
                 if (pg < 1)
                     pg = 1;
@@ -70,14 +69,7 @@ namespace DietTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> AddProduct(AddProductViewModel productModel)
         {
-            var product = new Product
-            {
-                ProductName = productModel.NewProductName,
-                Fat = productModel.Fat,
-                Protein = productModel.Protein,
-                Carbs = productModel.Carbs,
-                Calories = productModel.Calories,
-            };
+            var product = _mapper.Map<AddProductViewModel, Product>(productModel);
             await _productService.CreateAsync(product);
             return RedirectToAction("Index");
         }
@@ -85,7 +77,7 @@ namespace DietTracker.Controllers
         [HttpGet]
         public IActionResult AddProduct()
         {
-            var model = new AddProductViewModel(){};
+            var model = new AddProductViewModel() { };
             return View(model);
         }
         [Authorize(Roles = "admin")]

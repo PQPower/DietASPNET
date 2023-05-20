@@ -1,4 +1,5 @@
-﻿using BusinessLogic;
+﻿using AutoMapper;
+using BusinessLogic;
 using BusinessLogic.Contracts;
 using BusinessLogic.Implementations;
 using BusinessLogic.Models;
@@ -16,11 +17,13 @@ namespace DietTracker.Controllers
         private readonly IWeightService _weightService;
         private readonly IUserService _userService;
 
+        private readonly IMapper _mapper;
 
-        public WeightController(IWeightService weightService, IUserService userService)
+        public WeightController(IWeightService weightService, IUserService userService, IMapper mapper)
         {
             _weightService = weightService;
             _userService = userService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -47,16 +50,7 @@ namespace DietTracker.Controllers
         [HttpPost]
         public IActionResult Calculate(WeightViewModel viewModel)
         {
-            //TODO add mapper
-            var model = new DataToCalculate()
-            {
-                Height = viewModel.Height,
-                Age = viewModel.Age,
-                Weight = viewModel.Weight,
-                Gender = viewModel.Gender,
-                LifeStyle = viewModel.LifeStyle,
-                Expectation = viewModel.Expectation,
-            };
+            var model = _mapper.Map<WeightViewModel, DataToCalculate>(viewModel);
             viewModel.CaloriesPerDay = _weightService.CalculateCaloriesPerDay(model);
             ModelState.Clear();
             return View("Index", viewModel);

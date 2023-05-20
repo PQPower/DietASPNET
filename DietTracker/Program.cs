@@ -18,6 +18,7 @@ namespace DietTracker
             builder.Services.AddTransient<IRoleService, RoleService>();
             builder.Services.AddTransient<IProductService, ProductService>();
             builder.Services.AddTransient<IWeightService, WeightService>();
+            builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
 
             builder.Services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultLocalConnection")));
