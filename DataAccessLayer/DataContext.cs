@@ -26,18 +26,19 @@ namespace DataAccessLayer
             string adminLogin = "admin";
             string adminPassword = "admin";
             User adminUser = new() { Id = 1, Login = adminLogin, Password = adminPassword, RoleId = adminRole.Id };
+            //TODO ADD admin parameter(weight history) here
 
-            // Seed default devices
-            var defaultDevices = new Product[]
-            {
-                //new Product(){ Id = 1, ProductName = "Water"},
-                //new Product(){ Id = 2, ProductName = "Tea"},
-                //new Product(){ Id = 3, ProductName = "Coffee"},
-            };
+            // Seed default Products
+            //var defaultProducts = new Product[]
+            //{
+            //    new Product(){ Id = 1, ProductName = "Water"},
+            //    new Product(){ Id = 2, ProductName = "Tea"},
+            //    new Product(){ Id = 3, ProductName = "Coffee"},
+            //};
 
             modelBuilder.Entity<Role>().HasData(new Role[] { adminRole, userRole });
             modelBuilder.Entity<User>().HasData(new User[] { adminUser });
-            modelBuilder.Entity<Product>().HasData(defaultDevices);
+            //modelBuilder.Entity<Product>().HasData(defaultProducts);
             base.OnModelCreating(modelBuilder);
         }
     }

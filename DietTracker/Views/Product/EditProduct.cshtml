@@ -12,7 +12,6 @@
 
     <div class="form-horizontal">
         <h4>Product</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Product.ProductName)
         <input asp-for="Product.Id" value="@Model.Product.Id" type="hidden" />
@@ -23,7 +22,7 @@
                 @Html.ValidationMessageFor(model => model.Product.ProductName, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        @*TODO CHANGE ORDER*@
         <div class="form-group">
             @Html.LabelFor(model => model.Product.Fat, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -32,7 +31,7 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.Product.Fat, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Product.Protein, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Product.Protein, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Product.Protein, "", new { @class = "text-danger" })
@@ -53,7 +52,7 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="col-md-offset-2 col-md-10 mt-3">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </div>

@@ -22,7 +22,6 @@ namespace DietTracker.Controllers
         }
 
         [Authorize(Roles = "admin, user")]
-        //[HttpGet]
         public IActionResult Index(string SearchText = "", int pg = 1)
         {
             //SPager SearchPager = new SPager() { Action = "Index", Controller = "Product", SearchText = SearchText };
@@ -115,11 +114,11 @@ namespace DietTracker.Controllers
         }
 
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> DeleteProduct(int id, string SearchText = "", int pg = 1)
         {
             var productToDelete = _productService.GetAll().FirstOrDefault(d => d.Id == id);
             await _productService.DeleteAsync(productToDelete);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { SearchText, pg });
         }
         /// <summary>
         /// Check in model does product with such product name exist
