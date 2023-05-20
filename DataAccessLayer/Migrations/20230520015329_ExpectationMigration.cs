@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccessLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class _initial : Migration
+    public partial class ExpectationMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -55,7 +55,9 @@ namespace DataAccessLayer.Migrations
                     RoleId = table.Column<int>(type: "int", nullable: true),
                     BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
-                    LifeStyle = table.Column<int>(type: "int", nullable: false)
+                    LifeStyle = table.Column<int>(type: "int", nullable: false),
+                    Expectation = table.Column<int>(type: "int", nullable: false),
+                    Height = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,16 +91,6 @@ namespace DataAccessLayer.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Products",
-                columns: new[] { "Id", "Calories", "Carbs", "Fat", "ProductDescription", "ProductName", "Protein" },
-                values: new object[,]
-                {
-                    { 1, null, null, null, null, "Water", null },
-                    { 2, null, null, null, null, "Tea", null },
-                    { 3, null, null, null, null, "Coffee", null }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "RoleName" },
                 values: new object[,]
@@ -109,8 +101,8 @@ namespace DataAccessLayer.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "BirthDate", "Gender", "LifeStyle", "Login", "Password", "RoleId" },
-                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 0, "admin", "admin", 1 });
+                columns: new[] { "Id", "BirthDate", "Expectation", "Gender", "Height", "LifeStyle", "Login", "Password", "RoleId" },
+                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 0, 0, 0, "admin", "admin", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",

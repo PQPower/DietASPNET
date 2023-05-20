@@ -2,6 +2,7 @@
 using BusinessLogic.Contracts;
 using BusinessLogic.Implementations;
 using BusinessLogic.Models;
+using DataAccessLayer.Entities;
 using DietTracker.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -58,6 +59,25 @@ namespace DietTracker.Controllers
             viewModel.CaloriesPerDay = _weightService.CalculateCaloriesPerDay(model);
             ModelState.Clear();
             return View("Index", viewModel);
+        }
+        [HttpGet]
+        public IActionResult WeightGraph()
+        {
+
+            return View();
+        }
+        public async Task<IActionResult> AddWeight(double weight)
+        {
+            var userData = await _userService.GetUserByNameAsync(User.Identity.Name);
+            var model = new UserWeightHistory()
+            {
+                UserId = userData.Id,
+                Weight = weight,
+                UpdatedDate = DateTime.Now,
+          
+            };
+            await _weightService.AddUserWeightHistoryAsync(model);
+            return View("WeightGraph");
         }
     }
 }

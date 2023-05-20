@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230513020138__initial3")]
-    partial class _initial3
+    [Migration("20230520015329_ExpectationMigration")]
+    partial class ExpectationMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,23 +55,6 @@ namespace DataAccessLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ProductName = "Water"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ProductName = "Tea"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ProductName = "Coffee"
-                        });
                 });
 
             modelBuilder.Entity("DataAccessLayer.Entities.Role", b =>
@@ -115,6 +98,9 @@ namespace DataAccessLayer.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Expectation")
+                        .HasColumnType("int");
+
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
@@ -146,6 +132,7 @@ namespace DataAccessLayer.Migrations
                         {
                             Id = 1,
                             BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Expectation = 0,
                             Gender = 0,
                             Height = 0,
                             LifeStyle = 0,

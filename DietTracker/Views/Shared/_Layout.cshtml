@@ -24,7 +24,7 @@
                     </li>
                 </ul>
                 <span class="navbar-text">
-                    @User.Identity.Name
+                    <a class="nav-link" asp-controller="Weight" asp-action="WeightGraph">@User.Identity.Name</a>
                 </span>
                 @if (User.Identity.IsAuthenticated)
                 {
